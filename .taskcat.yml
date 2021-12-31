@@ -1,0 +1,9 @@
+project:
+  name: cfn-s3buckets
+  regions:
+  - us-east-1
+tests:
+  default:
+    template: ./new.json
+    parameters:
+      BucketName: andrew-benjamin-charlie-doug
