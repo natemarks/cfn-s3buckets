@@ -6,6 +6,9 @@ trap cleanup SIGINT SIGTERM ERR EXIT
 STACK_NAME="deleteme-cfn-s3buckets"
 declare -r STACK_NAME
 
+TEMPLATE_FILE="private.json"
+declare -r TEMPLATE_FILE
+
 usage() {
   cat <<EOF
 Usage: run_tests.sh [-h] [-v] -b bucket -r region -p project
@@ -126,7 +129,7 @@ upload_templates() {
 create_stack() {
   aws cloudformation create-stack \
   --stack-name "${STACK_NAME}" \
-  --template-body "file://new.json"
+  --template-body "file://${TEMPLATE_FILE}"
 }
 
 wait_for_continue() {

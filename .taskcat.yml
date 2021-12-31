@@ -4,6 +4,6 @@ project:
   - us-east-1
 tests:
   default:
-    template: ./new.json
+    template: ./private.json
     parameters:
-      BucketName: andrew-benjamin-charlie-doug
+      BucketName: cfn-s3buckets-alpha-bravo-charlie-delta
