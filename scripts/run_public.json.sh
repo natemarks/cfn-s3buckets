@@ -3,10 +3,10 @@ set -Eeuo pipefail
 trap cleanup SIGINT SIGTERM ERR EXIT
 
 
-STACK_NAME="deleteme-cfn-s3buckets-private"
+STACK_NAME="deleteme-cfn-s3buckets-public"
 declare -r STACK_NAME
 
-TEMPLATE_FILE="private.json"
+TEMPLATE_FILE="public.json"
 declare -r TEMPLATE_FILE
 
 usage() {

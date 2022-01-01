@@ -7,7 +7,9 @@ THIS_FILE := $(lastword $(MAKEFILE_LIST))
 VERSION := 0.0.1
 COMMIT := $(shell git rev-parse HEAD)
 CDIR = $(shell pwd)
-
+PUBLISH_BUCKET := natemarks-cloudformation-public
+PROJECT := cfn-s3buckets
+TEMPLATES := public.json private.json
 CURRENT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 DEFAULT_BRANCH := main
 
@@ -70,5 +72,12 @@ rebase: git-status ## rebase current feature branch on to the default branch
 
 shellcheck:
 	find scripts -type f -name "*.sh" -exec "shellcheck" "--format=gcc" {} \;
-	
-.PHONY: build release static  lint test
+
+${TEMPLATES}:
+	aws s3api put-object --bucket $(PUBLISH_BUCKET) \
+	--key $(PROJECT) ; \
+	aws s3 cp $@ s3://$(PUBLISH_BUCKET)/$(PROJECT)/$@ ; \
+
+publish: ${TEMPLATES} ## publish templates to public bucket
+
+.PHONY: build release static  lint test publish ${TEMPLATES}
