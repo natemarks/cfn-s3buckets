@@ -75,7 +75,7 @@ shellcheck:
 
 ${TEMPLATES}:
 	aws s3api put-object --bucket $(PUBLISH_BUCKET) \
-	--key $(PROJECT) ; \
+	--key $(PROJECT)/ ; \
 	aws s3 cp $@ s3://$(PUBLISH_BUCKET)/$(PROJECT)/$@ ; \
 
 publish: ${TEMPLATES} ## publish templates to public bucket

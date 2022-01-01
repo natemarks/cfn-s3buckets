@@ -31,6 +31,27 @@
                   "ErrorDocument": "error.html"
               }
           }
+      },
+      "BucketPolicy": {
+          "Type": "AWS::S3::BucketPolicy",
+          "Properties": {
+              "PolicyDocument": {
+                "Id": "PublicBucketPolicy",
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Sid": "PermitPublicRead",
+                    "Action": "s3:GetObject",
+                    "Effect": "Allow",
+                    "Resource": { "Fn::Sub": [ "${BucketArn}/*", { "BucketArn": { "Fn::GetAtt" : [ "S3Bucket", "Arn" ] }} ]} ,
+                    "Principal": "*"
+                  }
+                ]
+              },
+              "Bucket": {
+                  "Ref": "S3Bucket"
+              }
+          }
       }
   },
     "Outputs": {
